@@ -33,3 +33,9 @@ export default async function ArticlePage({ params }: Params) {
     </div>
   );
 }
+
+export async function generateStaticParams() {
+  return Array.from({ length: 10 }, (_, i) => ({
+    id: (i + 1).toString(),
+  }));
+}
