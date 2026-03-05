@@ -1,35 +1,29 @@
+"use client";
+
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 export default function ArticlesLayout({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-
   const navItems = [
-    { href: "/articles/favorite", label: "Favorite Articles" },
-    { href: "/articles/create", label: "Create Article" },
+    { href: "/dashboard/articles/favorite", label: "Favorite Articles" },
+    { href: "/dashboard/articles/create", label: "Create Article" },
   ];
 
   return (
-    <div>
-      <header style={{ borderBottom: "1px solid #ccc", padding: "1rem" }}>
-        <ul style={{ display: "flex", listStyle: "none", gap: "1rem", padding: 0, margin: 0 }}>
+    <div className="p-6 flex flex-col gap-4">
+      <nav>
+        <ul className="flex gap-4">
           {navItems.map((item) => (
             <li key={item.href}>
-              <Link
-                href={item.href}
-                style={{
-                  fontWeight: pathname === item.href ? "bold" : "normal",
-                  color: pathname === item.href ? "green" : "black",
-                  textDecoration: "none",
-                }}
-              >
+              <Link href={item.href} className={pathname === item.href ? "font-bold text-green-500" : "text-black"}>
                 {item.label}
               </Link>
             </li>
           ))}
         </ul>
-      </header>
-      <main style={{ padding: "1rem" }}>{children}</main>
+      </nav>
+      <main className="mt-6">{children}</main>
     </div>
   );
 }
