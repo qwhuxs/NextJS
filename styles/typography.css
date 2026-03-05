@@ -1,19 +1,9 @@
 body {
-  font-family: system-ui, sans-serif;
-  color: var(--color-text);
-  line-height: 1.6;
+  font-family: var(--font-geist-sans);
+  margin: 0;
+  padding: 0;
 }
 
-h1 {
-  font-size: 2rem;
+h1, h2, h3 {
   font-weight: 700;
-}
-
-h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-}
-
-p {
-  margin-bottom: 1rem;
 }

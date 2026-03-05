@@ -1,13 +1,5 @@
 .container {
   max-width: 1200px;
   margin: 0 auto;
-  padding: var(--spacing-md);
-}
-
-.sidebar {
-  min-width: 220px;
-}
-
-.main {
-  flex: 1;
+  padding: 0 16px;
 }
