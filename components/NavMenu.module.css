@@ -1,0 +1,16 @@
+.menu {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.link {
+  text-decoration: none;
+  color: black;
+  font-weight: 500;
+}
+
+.active {
+  color: var(--color-primary);
+  font-weight: bold;
+}
