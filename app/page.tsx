@@ -1,27 +1,87 @@
-import { Button, Card, CardContent, Typography } from "@mui/material";
+"use client";
+
+import Link from "next/link";
+import { Button } from "@mui/material";
 
 export default function DashboardPage() {
-  return (
-    <>
-      <section className="bg-gradient-to-r from-pink-500 to-purple-600 rounded-3xl p-8 mb-8 shadow-2xl text-center">
-        <h1 className="text-5xl font-extrabold mb-4">Welcome to Your Dashboard</h1>
-        <p className="text-lg text-white/80 mb-6">Manage your projects, articles, and profile with style.</p>
-        <Button variant="contained" color="secondary" className="mt-6">Get Started</Button>
-      </section>
+  const cards = [
+    { 
+      title: "Articles", 
+      href: "/dashboard/articles", 
+      desc: "View and manage all your articles.",
+      icon: "📄"
+    },
+    { 
+      title: "Profile", 
+      href: "/dashboard/profile/settings", 
+      desc: "Edit your personal information.",
+      icon: "👤"
+    },
+    { 
+      title: "Security", 
+      href: "/dashboard/profile/security", 
+      desc: "Manage your security settings.",
+      icon: "🔒"
+    },
+  ];
 
-      <section className="grid grid-cols-1 tablet:grid-cols-3 gap-6">
-        {["Articles", "Profile", "Security"].map((title, idx) => (
-          <Card key={idx} className="bg-white/10 backdrop-blur-md rounded-3xl p-4">
-            <CardContent className="text-center">
-              <Typography variant="h6" className="text-white font-bold">{title}</Typography>
-              {/* Збільшений відступ mt-6 для кращого вигляду */}
-              <Button variant="contained" color="secondary" className="mt-6 w-full">
-                {title === "Articles" ? "Go" : title === "Profile" ? "Edit" : "Secure"}
-              </Button>
-            </CardContent>
-          </Card>
-        ))}
-      </section>
-    </>
+  return (
+    <div className="flex min-h-screen">
+      {/* Sidebar */}
+      <nav className="sidebar w-64 bg-white/10 backdrop-blur-md p-6 hidden lg:flex flex-col gap-4">
+        <Link href="/dashboard">
+          <Button variant="outlined" fullWidth startIcon={<span>📊</span>}>
+            Dashboard
+          </Button>
+        </Link>
+        <Link href="/dashboard/articles">
+          <Button variant="outlined" fullWidth startIcon={<span>📄</span>}>
+            Articles
+          </Button>
+        </Link>
+        <Link href="/dashboard/profile/settings">
+          <Button variant="outlined" fullWidth startIcon={<span>👤</span>}>
+            Profile Settings
+          </Button>
+        </Link>
+        <Link href="/dashboard/profile/security">
+          <Button variant="outlined" fullWidth startIcon={<span>🔒</span>}>
+            Profile Security
+          </Button>
+        </Link>
+      </nav>
+
+      {/* Main content */}
+      <main className="flex-1 p-6 container mx-auto">
+        <section className="hero mb-8 text-center">
+          <h1 className="font-extrabold text-4xl mb-2">Welcome to Your Dashboard</h1>
+          <p className="text-gray-300 text-lg">Manage your projects, articles, and profile in style.</p>
+        </section>
+
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          {cards.map((c) => (
+            <div 
+              key={c.title} 
+              className="card p-6 w-full max-w-sm bg-white/10 backdrop-blur-md rounded-3xl shadow-lg flex flex-col items-center gap-4"
+            >
+              <div className="text-5xl">{c.icon}</div>
+              <h3 className="text-2xl font-bold text-[#7c5cf0]">{c.title}</h3>
+              <p className="text-gray-400 text-sm text-center">{c.desc}</p>
+              
+              {/* Кнопка переходу */}
+              <Link href={c.href} passHref>
+                <Button 
+                  variant="contained" 
+                  color="secondary" 
+                  className="w-full"
+                >
+                  Go to {c.title}
+                </Button>
+              </Link>
+            </div>
+          ))}
+        </section>
+      </main>
+    </div>
   );
 }

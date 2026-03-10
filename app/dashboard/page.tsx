@@ -1,68 +1,44 @@
 "use client";
+
 import Link from "next/link";
+import { Button } from "@mui/material";
 
 export default function DashboardPage() {
   const cards = [
-    { 
-      title: "Articles", 
-      href: "/dashboard/articles", 
-      desc: "View and manage all your articles.",
-      icon: "📄"
-    },
-    { 
-      title: "Profile", 
-      href: "/dashboard/profile/settings", 
-      desc: "Edit your personal information.",
-      icon: "👤"
-    },
-    { 
-      title: "Security", 
-      href: "/dashboard/profile/security", 
-      desc: "Manage your security settings.",
-      icon: "🔒"
-    },
+    { title: "Articles", href: "/dashboard/articles", desc: "View and manage all your articles.", icon: "📄" },
+    { title: "Profile", href: "/dashboard/profile/settings", desc: "Edit your personal information.", icon: "👤" },
+    { title: "Security", href: "/dashboard/profile/security", desc: "Manage your security settings.", icon: "🔒" },
   ];
 
   return (
     <div className="flex min-h-screen">
-      <nav className="sidebar hidden lg:flex">
-        <Link href="/dashboard" className="active">
-          <span>📊</span> Dashboard
-        </Link>
-        <Link href="/dashboard/articles">
-          <span>📄</span> Articles
-        </Link>
-        <Link href="/dashboard/profile/settings">
-          <span>👤</span> Profile Settings
-        </Link>
-        <Link href="/dashboard/profile/security">
-          <span>🔒</span> Profile Security
-        </Link>
+      {/* Sidebar */}
+      <nav className="sidebar w-64 bg-white/10 backdrop-blur-md p-6 hidden lg:flex flex-col gap-4">
+        <Link href="/dashboard"><Button fullWidth startIcon={<span>📊</span>} variant="outlined">Dashboard</Button></Link>
+        <Link href="/dashboard/articles"><Button fullWidth startIcon={<span>📄</span>} variant="outlined">Articles</Button></Link>
+        <Link href="/dashboard/profile/settings"><Button fullWidth startIcon={<span>👤</span>} variant="outlined">Profile Settings</Button></Link>
+        <Link href="/dashboard/profile/security"><Button fullWidth startIcon={<span>🔒</span>} variant="outlined">Profile Security</Button></Link>
       </nav>
-      <main className="flex-1 p-6 container">
-        <section className="hero mb-8">
-          <h1 className="font-extrabold">Welcome to Your Dashboard</h1>
-          <p>Manage your projects, articles, and profile in style.</p>
+
+      {/* Main content */}
+      <main className="flex-1 p-6 container mx-auto">
+        <section className="hero mb-8 text-center">
+          <h1 className="text-4xl font-extrabold mb-2">Welcome to Your Dashboard</h1>
+          <p className="text-gray-300 text-lg">Manage your projects, articles, and profile in style.</p>
         </section>
-<section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-  {cards.map((c) => (
-    <div key={c.title} className="card p-6 w-full max-w-sm"> {/* Додано w-full max-w-sm */}
-      <div className="flex flex-col items-center gap-3"> {/* Трохи менше gap */}
-        <div className="text-5xl">{c.icon}</div>
-        <h3 className="text-2xl font-bold text-[#7c5cf0]">{c.title}</h3>
-        <p className="text-[#5a5a5a] text-sm text-center">{c.desc}</p>
-        
-        {/* Кнопка стала компактнішою */}
-        <Link 
-          href={c.href} 
-          className="bg-[#7c5cf0] text-white py-2 px-6 rounded-full text-sm font-semibold hover:bg-[#9f8af0] transition-all shadow-md hover:shadow-lg"
-        >
-          Go to {c.title}
-        </Link>
-      </div>
-    </div>
-  ))}
-</section>
+
+        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
+          {cards.map(c => (
+            <div key={c.title} className="card p-6 w-full max-w-sm bg-white/10 backdrop-blur-md rounded-3xl shadow-lg flex flex-col items-center gap-4">
+              <div className="text-5xl">{c.icon}</div>
+              <h3 className="text-2xl font-bold text-[#7c5cf0]">{c.title}</h3>
+              <p className="text-gray-400 text-sm text-center">{c.desc}</p>
+              <Link href={c.href}>
+                <Button variant="contained" color="secondary" className="w-full">Go to {c.title}</Button>
+              </Link>
+            </div>
+          ))}
+        </section>
       </main>
     </div>
   );
