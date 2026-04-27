@@ -1,6 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 :root {
   --bg-gradient-from: #f9f3e8;
@@ -18,12 +16,13 @@
 }
 
 body {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  font-family: 'Inter', system-ui, sans-serif;
   color: var(--text-primary);
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--bg-gradient-from) 0%, var(--bg-gradient-to) 100%);
+  background: linear-gradient(135deg, var(--bg-gradient-from), var(--bg-gradient-to));
 }
 
+/* 🔥 hero */
 .hero {
   background: linear-gradient(135deg, #7c5cf0 0%, #9f8af0 50%, #b7a5ff 100%);
   border-radius: 2.5rem;
@@ -31,36 +30,9 @@ body {
   text-align: center;
   color: white;
   box-shadow: var(--shadow-lg);
-  position: relative;
-  overflow: hidden;
 }
 
-.hero::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: radial-gradient(circle at 30% 50%, rgba(255, 255, 255, 0.2) 0%, transparent 60%);
-  pointer-events: none;
-}
-
-.hero h1 {
-  font-size: 2.8rem;
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  margin-bottom: 1rem;
-  position: relative;
-}
-
-.hero p {
-  font-size: 1.2rem;
-  opacity: 0.95;
-  font-weight: 400;
-  position: relative;
-}
-
+/* 🔥 card */
 .card {
   background: var(--card-bg);
   backdrop-filter: blur(10px);
@@ -68,159 +40,114 @@ body {
   border-radius: 2rem;
   padding: 2rem;
   box-shadow: var(--shadow-sm);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* 🔥 inputs */
+.input {
+  width: 100%;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 12px;
+}
+
+.input:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 2px rgba(124,92,240,0.2);
+}
+
+/* 🔥 кнопки */
+.btn {
+  width: 100%;
+  padding: 12px;
+  border-radius: 12px;
+  color: white;
+  font-weight: 600;
+  background: linear-gradient(to right, #7c5cf0, #9f8af0);
+  transition: 0.2s;
+}
+
+.btn:hover {
+  transform: scale(1.03);
+}
+
+/* 🔥 соц кнопки */
+.social-btn {
+  border: 1px solid #ddd;
+  padding: 10px;
+  border-radius: 12px;
+  width: 100%;
+}
+
+.social-btn:hover {
+  background: #f9fafb;
+}
+
+/* 🔥 sidebar */
+.sidebar {
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(12px);
+  border-right: 1px solid rgba(255,255,255,0.2);
+}
+
+/* 🔥 card hover */
+.card {
+  transition: all 0.25s ease;
 }
 
 .card:hover {
-  transform: translateY(-8px);
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-light);
+  transform: translateY(-5px) scale(1.01);
+  box-shadow: 0 15px 35px rgba(124, 92, 240, 0.2);
 }
 
-.card-content {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  text-align: center;
+/* 🔥 кнопки hover */
+.btn:hover {
+  transform: scale(1.03);
 }
 
-.card-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
+/* 🔥 link hover */
+a {
+  transition: 0.2s;
 }
 
-.card-description {
-  color: var(--text-secondary);
-  font-size: 0.95rem;
-  line-height: 1.6;
+a:hover {
+  opacity: 0.8;
 }
 
-/* Видаляємо .btn-primary і .btn-secondary, залишаємо тільки базові стилі */
-
-.sidebar {
-  background: white;
-  backdrop-filter: blur(10px);
-  padding: 2.5rem 1.5rem;
-  border-radius: 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 0.75rem;
-  box-shadow: var(--shadow-sm);
-  height: fit-content;
-  min-width: 240px;
+/* 🔥 BACKGROUND */
+body {
+  background: linear-gradient(135deg, #f5f3ff, #e9e4ff);
+  color: #1f2937;
 }
 
-.sidebar a {
-  color: var(--text-secondary);
-  font-weight: 500;
-  padding: 0.75rem 1rem;
-  border-radius: 1rem;
-  transition: all 0.2s;
-  text-decoration: none;
+/* 🔥 КНОПКИ */
+.btn {
   display: flex;
   align-items: center;
-  gap: 0.5rem;
+  gap: 8px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  font-weight: 500;
+  background: rgba(255,255,255,0.6);
+  backdrop-filter: blur(10px);
+  transition: all 0.25s ease;
 }
 
-.sidebar a:hover {
-  background: var(--primary-soft);
-  color: var(--primary);
-}
-
-.sidebar a.active {
-  background: var(--primary);
+.btn:hover {
+  background: linear-gradient(135deg, #7c5cf0, #a88beb);
   color: white;
-  font-weight: 600;
-}
-
-.article-card {
-  background: white;
-  border-radius: 1.5rem;
-  padding: 2rem;
-  box-shadow: var(--shadow-sm);
-  transition: all 0.3s ease;
-  border: 1px solid transparent;
-}
-
-.article-card:hover {
-  box-shadow: var(--shadow-md);
-  border-color: var(--primary-soft);
   transform: translateX(4px);
 }
 
-.article-title {
-  font-size: 1.3rem;
-  font-weight: 700;
-  color: var(--text-primary);
-  margin-bottom: 0.75rem;
-  line-height: 1.4;
+/* 🔥 INPUT */
+.input {
+  width: 100%;
+  padding: 10px;
+  border-radius: 12px;
+  border: 1px solid #ddd;
+  outline: none;
 }
 
-.article-body {
-  color: var(--text-secondary);
-  line-height: 1.7;
-  font-size: 1rem;
-}
-
-.back-link {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: var(--primary);
-  font-weight: 600;
-  padding: 0.5rem 1rem;
-  border-radius: 2rem;
-  transition: all 0.2s;
-  background: white;
-  box-shadow: var(--shadow-sm);
-  text-decoration: none;
-}
-
-.back-link:hover {
-  background: var(--primary-soft);
-  transform: translateX(-4px);
-}
-
-.grid-layout {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-}
-
-.container {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 2rem;
-}
-
-.icon {
-  width: 2rem;
-  height: 2rem;
-  color: var(--primary);
-}
-
-.icon-small {
-  width: 1.25rem;
-  height: 1.25rem;
-}
-
-.icon-large {
-  width: 4rem;
-  height: 4rem;
-}
-
-@media (max-width: 768px) {
-  .hero h1 {
-    font-size: 2rem;
-  }
-  
-  .hero p {
-    font-size: 1rem;
-  }
-  
-  .container {
-    padding: 1rem;
-  }
+.input:focus {
+  border-color: #7c5cf0;
 }
