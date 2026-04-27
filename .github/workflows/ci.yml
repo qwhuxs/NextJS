@@ -2,7 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [Lab4]
+    branches: ["Lab4"]
+  pull_request:
+    branches: ["Lab4"]
 
 jobs:
   test:
@@ -11,24 +13,39 @@ jobs:
     env:
       NEXTAUTH_SECRET: test
       NEXTAUTH_URL: http://localhost:3000
+      DATABASE_URL: "file:./dev.db"
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
 
-      - run: npm install
+      - name: Install dependencies
+        run: npm install
 
-      - run: npm run test
+      - name: Setup Prisma
+        run: |
+          npx prisma generate
+          npx prisma db push
 
-      - run: npx playwright install --with-deps
+      - name: Run Jest tests
+        run: npm run test
 
-      - run: npm run build
+      - name: Run coverage
+        run: npm run test:coverage
 
-      - run: npm start &
+      - name: Install Playwright browsers
+        run: npx playwright install --with-deps
 
-      - run: npx wait-on http://localhost:3000
+      - name: Start app
+        run: npm run build && npm run start &
 
-      - run: npm run test:e2e
+      - name: Wait for app
+        run: npx wait-on http://localhost:3000
+
+      - name: Run Playwright tests
+        run: npm run test:e2e

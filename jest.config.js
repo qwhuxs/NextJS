@@ -1,12 +1,13 @@
-/** @type {import('jest').Config} */
-const config = {
-  testEnvironment: "jsdom",
+const nextJest = require("next/jest");
 
+const createJestConfig = nextJest({
+  dir: "./",
+});
+
+const customJestConfig = {
   setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
 
-  moduleNameMapper: {
-    "^@/(.*)$": "<rootDir>/$1",
-  },
+  testEnvironment: "jsdom",
 
   testPathIgnorePatterns: ["/node_modules/", "/e2e/"],
 
@@ -20,4 +21,4 @@ const config = {
   },
 };
 
-module.exports = config;
+module.exports = createJestConfig(customJestConfig);
