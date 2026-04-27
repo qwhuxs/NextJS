@@ -13,14 +13,14 @@ export default function DashboardPage() {
     },
     { 
       title: "Profile", 
-      href: "/dashboard/profile/settings", 
-      desc: "Edit your personal information.",
+      href: "/profile",
+      desc: "View your profile.",
       icon: "👤"
     },
     { 
       title: "Security", 
-      href: "/dashboard/profile/security", 
-      desc: "Manage your security settings.",
+      href: "/profile/security", 
+      desc: "Change your password.",
       icon: "🔒"
     },
   ];
@@ -34,19 +34,22 @@ export default function DashboardPage() {
             Dashboard
           </Button>
         </Link>
+
         <Link href="/dashboard/articles">
           <Button variant="outlined" fullWidth startIcon={<span>📄</span>}>
             Articles
           </Button>
         </Link>
-        <Link href="/dashboard/profile/settings">
+
+        <Link href="/profile"> {/* ✅ */}
           <Button variant="outlined" fullWidth startIcon={<span>👤</span>}>
-            Profile Settings
+            Profile
           </Button>
         </Link>
-        <Link href="/dashboard/profile/security">
+
+        <Link href="/profile/security"> {/* ✅ */}
           <Button variant="outlined" fullWidth startIcon={<span>🔒</span>}>
-            Profile Security
+            Security
           </Button>
         </Link>
       </nav>
@@ -55,7 +58,9 @@ export default function DashboardPage() {
       <main className="flex-1 p-6 container mx-auto">
         <section className="hero mb-8 text-center">
           <h1 className="font-extrabold text-4xl mb-2">Welcome to Your Dashboard</h1>
-          <p className="text-gray-300 text-lg">Manage your projects, articles, and profile in style.</p>
+          <p className="text-gray-300 text-lg">
+            Manage your projects, articles, and profile in style.
+          </p>
         </section>
 
         <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
@@ -68,8 +73,7 @@ export default function DashboardPage() {
               <h3 className="text-2xl font-bold text-[#7c5cf0]">{c.title}</h3>
               <p className="text-gray-400 text-sm text-center">{c.desc}</p>
               
-              {/* Кнопка переходу */}
-              <Link href={c.href} passHref>
+              <Link href={c.href}>
                 <Button 
                   variant="contained" 
                   color="secondary" 
