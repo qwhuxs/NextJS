@@ -8,6 +8,10 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    env:
+      NEXTAUTH_SECRET: test
+      NEXTAUTH_URL: http://localhost:3000
+
     steps:
       - uses: actions/checkout@v4
 
@@ -18,7 +22,6 @@ jobs:
       - run: npm install
 
       - run: npm run test
-
 
       - run: npx playwright install --with-deps
 
