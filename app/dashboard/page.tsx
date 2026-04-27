@@ -1,96 +1,104 @@
 "use client";
 
-import React, { useEffect } from "react"; 
 import Link from "next/link";
-import { Button } from "@mui/material";
+import { useSession, signOut } from "next-auth/react";
 
 export default function DashboardPage() {
-  const publicVar = process.env.NEXT_PUBLIC_API_URL;
-  const privateVar = process.env.DB_PASSWORD; 
-
-  const addArticle = async () => {
-    try {
-      const response = await fetch("/api/articles", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ 
-          title: "Стаття з Дашборду", 
-          content: "Цю статтю додано через кнопку на головній сторінці!" 
-        }),
-      });
-
-      if (response.ok) {
-        alert("Статтю успішно додано до БД!");
-        window.location.href = "/dashboard/articles";
-      }
-    } catch (error) {
-      console.error("Error adding article:", error);
-    }
-  };
-
-  useEffect(() => {
-    console.log("--- Browser Console ---");
-    console.log("Public Variable:", publicVar);
-    console.log("Private Variable:", privateVar);
-  }, [publicVar, privateVar]);
+  const { data: session } = useSession();
 
   const cards = [
-    { title: "Articles", href: "/dashboard/articles", desc: "View and manage all your articles.", icon: "📄" },
-    { title: "Profile", href: "/dashboard/profile/settings", desc: "Edit your personal information.", icon: "👤" },
-    { title: "Security", href: "/dashboard/profile/security", desc: "Manage your security settings.", icon: "🔒" },
+    {
+      title: "Articles",
+      href: "/dashboard/articles",
+      desc: "Перегляд і керування статтями",
+      icon: "📄",
+    },
+    {
+      title: "Profile",
+      href: "/profile",
+      desc: "Переглянути профіль",
+      icon: "👤",
+    },
+    {
+      title: "Security",
+      href: "/profile/security",
+      desc: "Змінити пароль",
+      icon: "🔒",
+    },
   ];
 
   return (
-    <div className="flex min-h-screen">
-      <nav className="sidebar w-64 bg-white/10 backdrop-blur-md p-6 hidden lg:flex flex-col gap-4">
-        <Link href="/dashboard"><Button fullWidth startIcon={<span>📊</span>} variant="outlined">Dashboard</Button></Link>
-        <Link href="/dashboard/articles"><Button fullWidth startIcon={<span>📄</span>} variant="outlined">Articles</Button></Link>
-        <Link href="/dashboard/profile/settings"><Button fullWidth startIcon={<span>👤</span>} variant="outlined">Profile Settings</Button></Link>
-        <Link href="/dashboard/profile/security"><Button fullWidth startIcon={<span>🔒</span>} variant="outlined">Profile Security</Button></Link>
-      </nav>
+    <div className="flex min-h-screen bg-gradient-to-br from-[#f5f3ff] to-[#e9e4ff]">
 
-      <main className="flex-1 p-6 container mx-auto">
-        <section className="hero mb-8 text-center">
-          <h1 className="text-4xl font-extrabold mb-2 text-white">Welcome to Your Dashboard</h1>
-          <p className="text-gray-300 text-lg mb-6">Manage your projects, articles, and profile in style.</p>
+      {/* 🔹 Sidebar */}
+      <aside className="w-64 bg-white/60 backdrop-blur-xl p-6 hidden lg:flex flex-col gap-4 shadow-xl border-r border-white/40">
 
-          <div className="flex flex-col items-center gap-4">
-            <div style={{ 
-              background: "rgba(255, 255, 255, 0.1)", 
-              padding: "15px", 
-              borderRadius: "15px", 
-              maxWidth: "500px", 
-              width: "100%",
-              border: "1px solid rgba(255, 255, 255, 0.2)" 
-            }}>
-              <h3 className="text-[#7c5cf0] font-bold mb-2">Lab 2: Env Variables</h3>
-              <p className="text-sm text-white">🌐 Public: <span className="text-green-400 font-mono">{publicVar}</span></p>
-              <p className="text-sm text-white">🔒 Private: <span className="text-red-400 font-mono">{privateVar || "undefined (Hidden in Browser)"}</span></p>
+        {/* 👤 USER */}
+        {session && (
+          <div className="mb-6 text-center">
+            <div className="text-sm text-gray-500">Ти увійшла як</div>
+            <div className="font-bold text-lg text-gray-800">
+              {session.user?.name || "User"}
             </div>
-
-            <Button 
-              onClick={addArticle} 
-              variant="contained" 
-              color="primary"
-              sx={{ py: 1.5, px: 4, borderRadius: "10px", fontWeight: "bold" }}
-            >
-              ➕ Додати статтю через API
-            </Button>
           </div>
-        </section>
+        )}
 
-        <section className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 justify-items-center">
-          {cards.map(c => (
-            <div key={c.title} className="card p-6 w-full max-w-sm bg-white/10 backdrop-blur-md rounded-3xl shadow-lg flex flex-col items-center gap-4 text-white">
-              <div className="text-5xl">{c.icon}</div>
-              <h3 className="text-2xl font-bold text-[#7c5cf0]">{c.title}</h3>
-              <p className="text-gray-400 text-sm text-center">{c.desc}</p>
-              <Link href={c.href}>
-                <Button variant="contained" color="secondary" className="w-full">Go to {c.title}</Button>
+        {/* 🔗 MENU */}
+        <Link href="/dashboard" className="btn">📊 Dashboard</Link>
+        <Link href="/dashboard/articles" className="btn">📄 Articles</Link>
+        <Link href="/profile" className="btn">👤 Profile</Link>
+        <Link href="/profile/security" className="btn">🔒 Security</Link>
+
+        {/* 🚪 LOGOUT */}
+        {session && (
+          <button
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="mt-6 px-4 py-2 rounded-xl border border-red-400 text-red-400 hover:bg-red-500 hover:text-white transition"
+          >
+            🚪 Вийти
+          </button>
+        )}
+      </aside>
+
+      {/* 🔹 Main */}
+      <main className="flex-1 p-6 container mx-auto">
+
+        {/* 🔥 Hero */}
+        <div className="rounded-3xl bg-gradient-to-r from-[#7c5cf0] to-[#a88beb] p-10 text-center text-white mb-10 shadow-2xl">
+          <h1 className="text-4xl font-bold mb-2">
+            Welcome{session?.user?.name ? `, ${session.user.name}` : ""} 👋
+          </h1>
+          <p className="opacity-90">
+            Керуй профілем, статтями та безпекою
+          </p>
+        </div>
+
+        {/* 🔹 Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {cards.map((c) => (
+            <div
+              key={c.title}
+              className="bg-white/70 backdrop-blur-xl rounded-3xl p-6 text-center shadow-xl hover:shadow-2xl hover:-translate-y-2 transition duration-300"
+            >
+              <div className="text-5xl mb-4">{c.icon}</div>
+
+              <h3 className="text-xl font-bold mb-2 text-[#7c5cf0]">
+                {c.title}
+              </h3>
+
+              <p className="text-gray-600 text-sm mb-4">
+                {c.desc}
+              </p>
+
+              <Link
+                href={c.href}
+                className="inline-block px-5 py-2 rounded-xl bg-gradient-to-r from-[#7c5cf0] to-[#a88beb] text-white shadow-md hover:shadow-xl hover:scale-105 transition"
+              >
+                Перейти
               </Link>
             </div>
           ))}
-        </section>
+        </div>
       </main>
     </div>
   );
