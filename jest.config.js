@@ -2,15 +2,13 @@
 const config = {
   testEnvironment: "jsdom",
 
+  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
+
   moduleNameMapper: {
     "^@/(.*)$": "<rootDir>/$1",
   },
 
-  setupFilesAfterEnv: ["<rootDir>/jest.setup.js"],
-
-  transform: {
-    "^.+\\.(js|jsx|ts|tsx)$": "babel-jest",
-  },
+  testPathIgnorePatterns: ["/node_modules/", "/e2e/"],
 
   coverageThreshold: {
     global: {
