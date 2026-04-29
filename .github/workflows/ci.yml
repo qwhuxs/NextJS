@@ -1,15 +1,14 @@
-name: CI Tests Workflow
+name: CI Tests
 
 on:
   push:
-    branches: ["Lab4"]
+    branches: [Lab4]
   pull_request:
-    branches: ["Lab4"]
+    branches: [Lab4]
 
 jobs:
   test:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
 
     env:
       NEXTAUTH_SECRET: test
@@ -17,11 +16,14 @@ jobs:
       DATABASE_URL: "file:./dev.db"
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repo
+        uses: actions/checkout@v4
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
           node-version: 18
+          cache: npm
 
       - name: Install dependencies
         run: npm install
@@ -31,10 +33,9 @@ jobs:
           npx prisma generate
           npx prisma db push
 
-      - name: Run Jest
+      - name: Run unit tests
         run: npm run test
 
-      # ✅ Playwright
       - name: Install Playwright
         run: npx playwright install --with-deps
 
@@ -42,10 +43,17 @@ jobs:
         run: npm run build
 
       - name: Start app
-        run: npm run start &
+        run: npm start &
 
       - name: Wait for app
         run: npx wait-on http://localhost:3000
 
-      - name: Run Playwright tests
+      - name: Run e2e tests
         run: npm run test:e2e
+
+      - name: Upload Playwright report
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report
+          path: playwright-report/

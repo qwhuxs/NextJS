@@ -1,7 +1,11 @@
 import { render, screen } from "@testing-library/react";
 
-test("button renders", () => {
-  render(<button>Увійти</button>);
+describe("Button", () => {
+  test("renders login button", () => {
+    render(<button>Увійти</button>);
 
-  expect(screen.getByText("Увійти")).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: /увійти/i });
+
+    expect(button).toBeInTheDocument();
+  });
 });

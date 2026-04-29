@@ -6,28 +6,32 @@ jest.mock("next-auth/react", () => ({
   signIn: jest.fn(),
 }));
 
-test("render login form", () => {
-  render(<LoginForm />);
+describe("LoginForm", () => {
 
-  expect(screen.getByPlaceholderText("Email")).toBeInTheDocument();
-  expect(screen.getByPlaceholderText("Пароль")).toBeInTheDocument();
-  expect(screen.getByText("Увійти")).toBeInTheDocument();
-});
+  test("renders login form", () => {
+    render(<LoginForm />);
 
-test("click login button calls signIn", () => {
-  render(<LoginForm />);
+    expect(screen.getByPlaceholderText(/email/i)).toBeInTheDocument();
+    expect(screen.getByPlaceholderText(/пароль/i)).toBeInTheDocument();
+    expect(screen.getByRole("button", { name: /увійти/i })).toBeInTheDocument();
+  });
 
-  const button = screen.getByText("Увійти");
+  test("click login button calls signIn", () => {
+    render(<LoginForm />);
 
-  fireEvent.click(button);
+    fireEvent.click(screen.getByRole("button", { name: /увійти/i }));
 
-  expect(signIn).toHaveBeenCalled();
-});
+    expect(signIn).toHaveBeenCalled();
+  });
 
-test("click google login", () => {
-  render(<LoginForm />);
+  test("click google login", () => {
+    render(<LoginForm />);
 
-  fireEvent.click(screen.getByText("Google"));
+    fireEvent.click(screen.getByText(/google/i));
 
-  expect(signIn).toHaveBeenCalledWith("google", { callbackUrl: "/profile" });
+    expect(signIn).toHaveBeenCalledWith("google", {
+      callbackUrl: "/profile",
+    });
+  });
+
 });

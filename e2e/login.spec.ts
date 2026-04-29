@@ -5,5 +5,8 @@ test("login page has form", async ({ page }) => {
 
   await expect(page.getByPlaceholder("Email")).toBeVisible();
   await expect(page.getByPlaceholder("Пароль")).toBeVisible();
-  await expect(page.getByText("Увійти")).toBeVisible();
+
+  await expect(
+    page.getByRole("button", { name: /увійти/i })
+  ).toBeVisible();
 });

@@ -56,9 +56,9 @@ export const authOptions: NextAuthOptions = {
     strategy: "jwt",
   },
 
-pages: {
-  signIn: "/login", 
-},
+  pages: {
+    signIn: "/login",
+  },
 
   callbacks: {
     async redirect({ url, baseUrl }) {
@@ -68,7 +68,10 @@ pages: {
 
     async session({ session, token }) {
       if (token?.sub) {
-        session.user.id = token.sub
+        session.user = {
+          ...session.user,
+          id: token.sub,
+        }
       }
       return session
     },

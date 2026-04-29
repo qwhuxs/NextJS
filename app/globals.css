@@ -1,153 +1,94 @@
 @import "tailwindcss";
 
 :root {
-  --bg-gradient-from: #f9f3e8;
-  --bg-gradient-to: #ffe8d9;
   --primary: #7c5cf0;
   --primary-light: #9f8af0;
-  --primary-soft: #e5deff;
   --text-primary: #2d2d2d;
-  --text-secondary: #5a5a5a;
-  --card-bg: rgba(255, 255, 255, 0.85);
+  --card-bg: rgba(255, 255, 255, 0.75);
   --card-border: rgba(124, 92, 240, 0.15);
-  --shadow-sm: 0 8px 30px rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 15px 35px rgba(124, 92, 240, 0.15);
-  --shadow-lg: 0 20px 40px rgba(124, 92, 240, 0.2);
 }
 
 body {
   font-family: 'Inter', system-ui, sans-serif;
   color: var(--text-primary);
   min-height: 100vh;
-  background: linear-gradient(135deg, var(--bg-gradient-from), var(--bg-gradient-to));
+  background: linear-gradient(135deg, #f5f3ff, #e9e4ff);
 }
 
-/* 🔥 hero */
 .hero {
-  background: linear-gradient(135deg, #7c5cf0 0%, #9f8af0 50%, #b7a5ff 100%);
-  border-radius: 2.5rem;
+  background: linear-gradient(135deg, #7c5cf0, #a88beb);
+  border-radius: 2rem;
   padding: 3rem 2rem;
   text-align: center;
   color: white;
-  box-shadow: var(--shadow-lg);
+  box-shadow: 0 20px 40px rgba(124, 92, 240, 0.3);
 }
 
-/* 🔥 card */
 .card {
   background: var(--card-bg);
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(14px);
   border: 1px solid var(--card-border);
   border-radius: 2rem;
   padding: 2rem;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 15px 35px rgba(124, 92, 240, 0.15);
+  transition: all 0.25s ease;
 }
 
-/* 🔥 inputs */
+.card:hover {
+  transform: translateY(-5px);
+}
+
 .input {
   width: 100%;
-  border: 1px solid #ddd;
   padding: 12px;
   border-radius: 12px;
+  border: 1px solid #ddd;
+  background: white;
 }
 
 .input:focus {
-  outline: none;
   border-color: var(--primary);
   box-shadow: 0 0 0 2px rgba(124,92,240,0.2);
+  outline: none;
 }
 
-/* 🔥 кнопки */
-.btn {
+.btn-primary {
   width: 100%;
   padding: 12px;
   border-radius: 12px;
   color: white;
   font-weight: 600;
-  background: linear-gradient(to right, #7c5cf0, #9f8af0);
-  transition: 0.2s;
+  background: linear-gradient(to right, #7c5cf0, #a88beb);
+  transition: all 0.2s;
 }
 
-.btn:hover {
-  transform: scale(1.03);
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 10px 25px rgba(124,92,240,0.3);
 }
 
-/* 🔥 соц кнопки */
-.social-btn {
-  border: 1px solid #ddd;
+.btn-secondary {
+  width: 100%;
   padding: 10px;
   border-radius: 12px;
-  width: 100%;
+  background: white;
+  border: 1px solid #ddd;
 }
 
-.social-btn:hover {
-  background: #f9fafb;
+.btn-secondary:hover {
+  background: #f3f4f6;
 }
 
-/* 🔥 sidebar */
 .sidebar {
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(12px);
-  border-right: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(14px);
+  border-right: 1px solid rgba(0,0,0,0.05);
 }
 
-/* 🔥 card hover */
-.card {
-  transition: all 0.25s ease;
-}
-
-.card:hover {
-  transform: translateY(-5px) scale(1.01);
-  box-shadow: 0 15px 35px rgba(124, 92, 240, 0.2);
-}
-
-/* 🔥 кнопки hover */
-.btn:hover {
-  transform: scale(1.03);
-}
-
-/* 🔥 link hover */
 a {
   transition: 0.2s;
 }
 
 a:hover {
   opacity: 0.8;
-}
-
-/* 🔥 BACKGROUND */
-body {
-  background: linear-gradient(135deg, #f5f3ff, #e9e4ff);
-  color: #1f2937;
-}
-
-/* 🔥 КНОПКИ */
-.btn {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  padding: 10px 14px;
-  border-radius: 14px;
-  font-weight: 500;
-  background: rgba(255,255,255,0.6);
-  backdrop-filter: blur(10px);
-  transition: all 0.25s ease;
-}
-
-.btn:hover {
-  background: linear-gradient(135deg, #7c5cf0, #a88beb);
-  color: white;
-  transform: translateX(4px);
-}
-
-/* 🔥 INPUT */
-.input {
-  width: 100%;
-  padding: 10px;
-  border-radius: 12px;
-  border: 1px solid #ddd;
-  outline: none;
-}
-
-.input:focus {
-  border-color: #7c5cf0;
 }
