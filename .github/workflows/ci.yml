@@ -1,4 +1,4 @@
-name: CI
+name: CI Tests Workflow
 
 on:
   push:
@@ -9,6 +9,7 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    timeout-minutes: 60
 
     env:
       NEXTAUTH_SECRET: test
@@ -16,36 +17,25 @@ jobs:
       DATABASE_URL: "file:./dev.db"
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v4
+      - uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: "npm"
 
       - name: Install dependencies
         run: npm install
-
-      - name: Cache Playwright
-        uses: actions/cache@v3
-        with:
-          path: ~/.cache/ms-playwright
-          key: ${{ runner.os }}-playwright
 
       - name: Setup Prisma
         run: |
           npx prisma generate
           npx prisma db push
 
-      - name: Run Jest tests
+      - name: Run Jest
         run: npm run test
 
-      - name: Run coverage
-        run: npm run test:coverage
-
-      - name: Install Playwright browsers
+      # ✅ Playwright
+      - name: Install Playwright
         run: npx playwright install --with-deps
 
       - name: Build app
